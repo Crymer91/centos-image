@@ -33,7 +33,6 @@ jobs:
           docker build -t crymer/centos:snapshot ${{ github.workspace }}
           docker scan crymer/centos:snapshot
       - run: echo "🍏 This job's status is ${{ job.status }}."
-name: build and push image
 on: 
   push:
     branches:
