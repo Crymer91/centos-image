@@ -2,7 +2,8 @@ name: check vulnerabilities
 on: push
 jobs:
   list_files:
-    runs-on: crymer/centos:latest
+    runs-on: ubuntu-latest
+    container: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -16,7 +17,8 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
   docker_scan_image:
-    runs-on: crymer/centos:latest
+    runs-on: ubuntu-latest
+    container: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -31,7 +33,8 @@ jobs:
           docker scan crymer/centos:snapshot
       - run: echo "🍏 This job's status is ${{ job.status }}."
   docker_push_image:
-    runs-on: crymer/centos:latest
+    runs-on: ubuntu-latest
+    container: crymer/centos:latest
     needs: 
       - docker_scan_image
       - list_files
