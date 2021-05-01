@@ -15,7 +15,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  docker_build_&_scan_crymer-centos-snapshot:
+  docker_scan_image:
     runs-on: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -30,9 +30,9 @@ jobs:
           docker build -t crymer/centos:snapshot ${{ github.workspace }}
           docker scan crymer/centos:snapshot
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  docker_build_&_scan_&_push_crymer-centos-latest:
+  docker_push_image:
     runs-on: crymer/centos:latest
-    needs: docker_build_&_scan_crymer-centos-snapshot
+    needs: docker_scan_image
     if: github.ref == 'refs/heads/master'
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -48,3 +48,4 @@ jobs:
           docker scan crymer/centos:latest
           docker push crymer/centos:latest
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo image "crymer/centos:latest" deployed!
