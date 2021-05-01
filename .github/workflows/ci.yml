@@ -1,8 +1,5 @@
 name: check vulnerabilities
-on: 
-  pull_request:
-    branches:
-      - main
+on: push
 jobs:
   list files:
     runs-on: crymer/centos:latest
@@ -33,13 +30,10 @@ jobs:
           docker build -t crymer/centos:snapshot ${{ github.workspace }}
           docker scan crymer/centos:snapshot
       - run: echo "🍏 This job's status is ${{ job.status }}."
-on: 
-  push:
-    branches:
-      - main
-jobs:
   docker build & scan & push crymer/centos:latest:
     runs-on: crymer/centos:latest
+    needs: docker build & scan crymer/centos:snapshot
+    if: github.ref == 'refs/heads/master'
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
