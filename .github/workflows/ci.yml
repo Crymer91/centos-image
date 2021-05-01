@@ -32,7 +32,9 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
   docker_push_image:
     runs-on: crymer/centos:latest
-    needs: docker_scan_image
+    needs: 
+      - docker_scan_image
+      - list_files
     if: github.ref == 'refs/heads/master'
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
