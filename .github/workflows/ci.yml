@@ -1,8 +1,11 @@
-name: GitHub Actions Demo
-on: [push]
+name: check vulnerabilities
+on: 
+  pull_request:
+    branches:
+      - main
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+  list files:
+    container: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -14,4 +17,41 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+  docker build & scan crymer/centos:snapshot:
+    container: crymer/centos:latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          docker build -t crymer/centos:snapshot ${{ github.workspace }}
+          docker scan crymer/centos:snapshot
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+name: build and push image
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  docker build & scan & push crymer/centos:latest:
+    container: crymer/centos:latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          docker build -t crymer/centos:latest ${{ github.workspace }}
+          docker scan crymer/centos:latest
+          docker push crymer/centos:latest
       - run: echo "🍏 This job's status is ${{ job.status }}."
