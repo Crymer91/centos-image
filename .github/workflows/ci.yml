@@ -21,7 +21,7 @@ jobs:
           tags: crymer/centos:latest
   docker_scan:
     runs-on: ubuntu-latest
-    need: docker_push
+    needs: docker_push
     steps:
       - uses: azure/container-scan@v0
         with:
