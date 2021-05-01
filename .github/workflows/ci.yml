@@ -1,7 +1,7 @@
 name: check vulnerabilities
 on: push
 jobs:
-  list files:
+  list_files:
     runs-on: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -15,7 +15,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  docker build & scan crymer/centos:snapshot:
+  docker_build_&_scan_crymer-centos-snapshot:
     runs-on: crymer/centos:latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -30,9 +30,9 @@ jobs:
           docker build -t crymer/centos:snapshot ${{ github.workspace }}
           docker scan crymer/centos:snapshot
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  docker build & scan & push crymer/centos:latest:
+  docker_build_&_scan_&_push_crymer-centos-latest:
     runs-on: crymer/centos:latest
-    needs: docker build & scan crymer/centos:snapshot
+    needs: docker_build_&_scan_crymer-centos-snapshot
     if: github.ref == 'refs/heads/master'
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
