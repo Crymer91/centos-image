@@ -21,7 +21,6 @@ jobs:
           tags: crymer/centos:vulnerable
   docker_scan:
     runs-on: ubuntu-latest
-    allow-failure: true
     needs: docker_push_snapshot
     steps:
       - uses: azure/container-scan@v0
