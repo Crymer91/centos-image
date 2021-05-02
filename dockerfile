@@ -7,6 +7,7 @@ HEALTHCHECK --interval=5m --timeout=3s \
   CMD curl -f http://localhost/ || exit 1
 # CIS-DI-0008
 RUN chmod u-s usr/sbin/unix_chkpwd
+RUN chmod u-s usr/bin/chage
 # CIS-DI-0001
 RUN groupadd centos && adduser centos -g centos
 USER centos
