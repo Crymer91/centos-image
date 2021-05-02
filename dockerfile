@@ -1,7 +1,5 @@
 FROM centos:centos8
 RUN dnf upgrade -y
-# CIS-DI-0005
-RUN export DOCKER_CONTENT_TRUST=1
 # DKL-LI-0003
 RUN rm -rf /tmp
 # CIS-DI-0006

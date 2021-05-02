@@ -13,6 +13,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: CIS-DI-0005
+        run: export DOCKER_CONTENT_TRUST=1
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -23,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: docker_push_snapshot
     steps:
+      - name: CIS-DI-0005
+        run: export DOCKER_CONTENT_TRUST=1
       - uses: azure/container-scan@v0
         with:
           image-name: crymer/centos:vulnerable
@@ -49,6 +53,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: CIS-DI-0005
+        run: export DOCKER_CONTENT_TRUST=1
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
