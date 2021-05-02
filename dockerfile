@@ -6,9 +6,9 @@ RUN rm -rf /tmp
 HEALTHCHECK --interval=5m --timeout=3s \
   CMD curl -f http://localhost/ || exit 1
 # CIS-DI-0008
-RUN chmod u-s usr/sbin/*
-RUN chmod u-s usr/bin/*
-RUN chmod 1744 usr/libexec/*
+RUN chmod -r 1744 usr/sbin/*
+RUN chmod -r 1744 usr/bin/*
+RUN chmod -r 1744 usr/libexec/*
 # CIS-DI-0001
 RUN groupadd centos && adduser centos -g centos
 USER centos
