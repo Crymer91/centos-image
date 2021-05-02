@@ -8,6 +8,7 @@ HEALTHCHECK --interval=5m --timeout=3s \
 # CIS-DI-0008
 RUN chmod u-s usr/sbin/unix_chkpwd
 RUN chmod u-s usr/bin/chage
+RUN chmod u-s usr/libexec/utempter/utempter
 # CIS-DI-0001
 RUN groupadd centos && adduser centos -g centos
 USER centos
