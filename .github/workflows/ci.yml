@@ -3,8 +3,6 @@ on: push
 jobs:
   docker_push_snapshot:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_CONTENT_TRUST: 1
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
